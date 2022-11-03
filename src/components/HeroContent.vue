@@ -25,7 +25,12 @@ const { dark } = inject("theme");
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-sm-6 col-8 item middle-content">
+      <div
+        :class="[
+          'col-lg-4 col-sm-6 col-8 item middle-content',
+          dark ? 'text-light' : 'text-dark',
+        ]"
+      >
         <div class="blob">
           <div class="fw-bold display-1 mt-md-5 mt-0 one">Web<br />Dev</div>
           <div class="beginner two">
