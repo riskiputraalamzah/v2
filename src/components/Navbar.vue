@@ -1,7 +1,45 @@
+<script setup>
+import { inject, ref } from "vue";
+const { dark, updateTheme } = inject("theme");
+const animate = ref(false);
+const toggleTheme = (event) => {
+  animate.value = !animate.value;
+
+  setTimeout(() => {
+    updateTheme();
+    changeTheme(dark.value);
+  }, 1000);
+
+  setTimeout(() => {
+    animate.value = !animate.value;
+  }, 2000);
+};
+
+const body = document.body;
+const changeTheme = (dark) => {
+  body.removeAttribute("class");
+  body.classList.add(dark ? "bg-dark" : "bg-light");
+};
+</script>
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
+  <nav
+    :class="[
+      'navbar navbar-expand-lg fixed-top',
+      dark ? 'navbar-dark bg-dark' : 'navbar-light bg-light',
+    ]"
+  >
+    <div class="container justify-content-between">
       <a class="navbar-brand fs-1 fw-bold color-primary" href="#">putra</a>
+      <div
+        @click="toggleTheme"
+        :class="[
+          'theme d-flex d-md-none m-0',
+          dark ? 'shadow-light' : 'shadow',
+          animate ? (dark ? 'animate dark' : 'animate light') : '',
+        ]"
+      >
+        <i :class="['fas text-warning', dark ? 'fa-moon' : 'fa-sun']"></i>
+      </div>
       <button
         class="navbar-toggler"
         type="button"
@@ -35,8 +73,15 @@
           </li>
         </ul>
 
-        <div class="theme shadow">
-          <i class="fas fa-sun text-warning"></i>
+        <div
+          @click="toggleTheme($event.target)"
+          :class="[
+            'theme d-none d-md-flex',
+            dark ? 'shadow-light' : 'shadow',
+            animate ? (dark ? 'animate dark' : 'animate light') : '',
+          ]"
+        >
+          <i :class="['fas text-warning', dark ? 'fa-moon' : 'fa-sun']"></i>
         </div>
         <!-- <form class="d-flex" role="search">
           <input
@@ -54,18 +99,56 @@
 <style scoped>
 .navbar .nav-link {
   font-family: var(--fontLogo);
-  font-size: 20px;
+  font-size: 22px;
 }
 
+.shadow-light {
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15) !important;
+}
 .theme {
   width: 50px;
+  position: relative;
   height: 50px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
   font-size: 25px;
   margin-left: 10rem;
+}
+.theme::after {
+  content: "";
+  transition: background 1s ease-in-out, 1s ease-in-out;
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  border-radius: 50%;
+}
+.theme.animate::after {
+  animation: scaling 2s ease-in-out;
+  z-index: 99999999999999999;
+  transform: scale(1);
+}
+.theme.animate.light::after {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+}
+.theme.animate.dark::after {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+@keyframes scaling {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(100);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
