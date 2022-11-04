@@ -2,7 +2,10 @@
 import { inject, ref } from "vue";
 const { dark, updateTheme, changeTheme, saveTheme } = inject("theme");
 const animate = ref(false);
-const toggleTheme = () => {
+let runningAnimate = 0;
+const toggleTheme = (event) => {
+  if(runningAnimate > 0) return false;
+runningAnimate = 1;
   animate.value = !animate.value;
 
   setTimeout(() => {
@@ -14,6 +17,7 @@ const toggleTheme = () => {
 
   setTimeout(() => {
     animate.value = !animate.value;
+    runningAnimate = 0;
   }, 2000);
 };
 </script>
