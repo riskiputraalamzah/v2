@@ -1,24 +1,20 @@
 <script setup>
 import { inject, ref } from "vue";
-const { dark, updateTheme } = inject("theme");
+const { dark, updateTheme, changeTheme, saveTheme } = inject("theme");
 const animate = ref(false);
-const toggleTheme = (event) => {
+const toggleTheme = () => {
   animate.value = !animate.value;
 
   setTimeout(() => {
-    updateTheme();
-    changeTheme(dark.value);
+    const dark = updateTheme();
+    changeTheme(dark);
+
+    saveTheme(dark);
   }, 1000);
 
   setTimeout(() => {
     animate.value = !animate.value;
   }, 2000);
-};
-
-const body = document.body;
-const changeTheme = (dark) => {
-  body.removeAttribute("class");
-  body.classList.add(dark ? "bg-dark" : "bg-light");
 };
 </script>
 <template>
