@@ -4,8 +4,8 @@ const { dark, updateTheme, changeTheme, saveTheme } = inject("theme");
 const animate = ref(false);
 let runningAnimate = 0;
 const toggleTheme = (event) => {
-  if(runningAnimate > 0) return false;
-runningAnimate = 1;
+  if (runningAnimate > 0) return false;
+  runningAnimate = 1;
   animate.value = !animate.value;
 
   setTimeout(() => {
@@ -33,7 +33,7 @@ runningAnimate = 1;
       <div
         @click="toggleTheme"
         :class="[
-          'theme d-flex d-md-none m-0',
+          'theme d-flex d-lg-none m-0',
           dark ? 'shadow-light' : 'shadow',
           animate ? (dark ? 'animate dark' : 'animate light') : '',
         ]"
@@ -76,7 +76,7 @@ runningAnimate = 1;
         <div
           @click="toggleTheme($event.target)"
           :class="[
-            'theme d-none d-md-flex',
+            'theme d-none d-lg-flex',
             dark ? 'shadow-light' : 'shadow',
             animate ? (dark ? 'animate dark' : 'animate light') : '',
           ]"
