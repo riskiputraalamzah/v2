@@ -69,7 +69,7 @@ provide("data", {
 </script>
 <template>
   <Navbar />
-  <div class="container">
+  <div class="container mb-lg-5 mb-0">
     <transition name="scale" mode="out-in">
       <component :is="activeComponent.component"></component>
     </transition>
