@@ -1,6 +1,7 @@
 <script setup>
 import { inject, ref } from "vue";
 const { dark, updateTheme, changeTheme, saveTheme } = inject("theme");
+const { changeComponent, getComponent } = inject("data");
 const animate = ref(false);
 let runningAnimate = 0;
 const toggleTheme = (event) => {
@@ -20,6 +21,16 @@ const toggleTheme = (event) => {
     runningAnimate = 0;
   }, 2000);
 };
+const activeClass = getComponent.value;
+
+const menus = [
+  { name: "Home", bind: "home" },
+  { name: "About", bind: "about" },
+  { name: "Skill", bind: "skill" },
+  { name: "Projects", bind: "projects" },
+  { name: "Blogs", bind: "blogs" },
+  { name: "Contacts", bind: "contacts" },
+];
 </script>
 <template>
   <nav
@@ -40,7 +51,7 @@ const toggleTheme = (event) => {
       >
         <i :class="['fas text-warning', dark ? 'fa-moon' : 'fa-sun']"></i>
       </div>
-      <button
+      <!-- <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
@@ -50,26 +61,25 @@ const toggleTheme = (event) => {
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      </button> -->
+      <div
+        :class="['collapse navbar-collapse', dark ? 'bg-dark' : 'bg-light']"
+        id="navbarSupportedContent"
+      >
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0 ml-0 mt-0">
-            <a class="nav-link active" href="#">HOME</a>
-          </li>
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0">
-            <a class="nav-link" href="#">ABOUT</a>
-          </li>
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0">
-            <a class="nav-link" href="#">SKILL</a>
-          </li>
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0">
-            <a class="nav-link" href="#">PROJECTS</a>
-          </li>
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0">
-            <a class="nav-link" href="#">BLOGS</a>
-          </li>
-          <li class="nav-item mx-md-3 mx-0 mt-3 mt-md-0 me-0 mb-0">
-            <a class="nav-link" href="#">CONTACTS</a>
+          <li
+            v-for="(menu, i) in menus"
+            :key="i"
+            class="nav-item mx-md-3 mx-0 mt-3 mt-md-0 ml-0 mt-0"
+          >
+            <a
+              :class="[
+                'nav-link',
+                activeClass.name == menu.bind ? 'active' : '',
+              ]"
+              @click="changeComponent(menu.bind)"
+              v-text="menu.name"
+            ></a>
           </li>
         </ul>
 
@@ -83,15 +93,6 @@ const toggleTheme = (event) => {
         >
           <i :class="['fas text-warning', dark ? 'fa-moon' : 'fa-sun']"></i>
         </div>
-        <!-- <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
       </div>
     </div>
   </nav>
@@ -100,6 +101,7 @@ const toggleTheme = (event) => {
 .navbar .nav-link {
   font-family: var(--fontLogo);
   font-size: 22px;
+  cursor: pointer;
 }
 
 .shadow-light {
@@ -149,6 +151,25 @@ const toggleTheme = (event) => {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@media (max-width: 992px) {
+  #navbarSupportedContent {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /* box-shadow: 0 1rem 3rem rgba(255, 255, 255, 0.175) !important; */
+  }
+  #navbarSupportedContent .navbar-nav {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  #navbarSupportedContent .navbar-nav .nav-link {
+    font-size: calc(16px + 0.75vw);
   }
 }
 </style>

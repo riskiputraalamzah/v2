@@ -40,6 +40,10 @@ body::-webkit-scrollbar-thumb {
 .font-logo {
   font-family: var(--fontLogo);
 }
+.margin-component {
+  margin-top: 6rem;
+  color: white;
+}
 /* .hero-content .my-photo {
   position: relative;
 } */
