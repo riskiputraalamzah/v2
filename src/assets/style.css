@@ -42,7 +42,7 @@ body::-webkit-scrollbar-thumb {
 }
 .margin-component {
   margin-top: 6rem;
-  color: white;
+  /* color: white; */
 }
 /* .hero-content .my-photo {
   position: relative;
