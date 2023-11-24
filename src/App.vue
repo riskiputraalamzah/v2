@@ -1,9 +1,15 @@
 <script setup>
+import { ref, provide, reactive, shallowRef, defineAsyncComponent } from "vue";
+import { computed } from "@vue/reactivity";
 import Navbar from "./components/Navbar.vue";
 import HeroContent from "./components/HeroContent.vue";
-import { ref, provide, reactive, shallowRef } from "vue";
-import About from "./components/About.vue";
-import { computed } from "@vue/reactivity";
+const About = defineAsyncComponent(() => import("./components/About.vue"));
+const Projects = defineAsyncComponent(() =>
+  import("./components/Projects.vue")
+);
+const Skill = defineAsyncComponent(() => import("./components/Skill.vue"));
+const Blogs = defineAsyncComponent(() => import("./components/Blogs.vue"));
+const Contact = defineAsyncComponent(() => import("./components/Contact.vue"));
 
 let dark = ref(false);
 
@@ -47,6 +53,10 @@ const changeComponent = (component) => {
   const myComponent = {
     home: HeroContent,
     about: About,
+    projects: Projects,
+    blogs: Blogs,
+    skill: Skill,
+    contacts: Contact,
   };
   if (component in myComponent) {
     activeComponent.name = component;
@@ -69,7 +79,7 @@ provide("data", {
 </script>
 <template>
   <Navbar />
-  <div class="container mb-lg-0 mb-5">
+  <div :class="['container mb-lg-0 mb-5', dark ? 'text-light' : 'text-dark']">
     <transition name="scale" mode="out-in">
       <component :is="activeComponent.component"></component>
     </transition>
