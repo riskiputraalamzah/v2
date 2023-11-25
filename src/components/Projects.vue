@@ -17,11 +17,16 @@ import data from "../data/projects.json";
       >
         <div class="card bg-transparent border-0 h-100">
           <img
-            loading="lazy"
-            :src="'/images/projects/' + d.img"
+            v-lazy="{
+              src: '/images/projects/' + d.img,
+
+              delay: 500,
+            }"
             class="card-img-top"
             :alt="d.name"
+            loading="lazy"
           />
+
           <div class="card-body text-center">
             <p class="card-title two-line font-logo fs-2" v-text="d.name"></p>
           </div>
