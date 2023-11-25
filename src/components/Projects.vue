@@ -27,7 +27,7 @@ import data from "../data/projects.json";
           </div>
         </div>
         <div class="card-footer text-center">
-          <button class="py-1 px-3 primary-bg border-0 rounded-pill">
+          <button class="py-1 px-3 primary-bg border-0 text-light rounded-pill">
             Detail
           </button>
         </div>
